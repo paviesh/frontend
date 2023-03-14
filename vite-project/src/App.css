@@ -22,3 +22,11 @@ tr:nth-child(even) {
 .highlight {
   background-color: yellow;
 }
+
+.highlight-different {
+  background-color: rgb(244, 153, 153);
+}
+
+.highlight-same {
+  background-color: rgb(156, 214, 156);
+}

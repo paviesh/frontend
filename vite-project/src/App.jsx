@@ -58,18 +58,19 @@ function App() {
         </thead>
         <tbody>
           <tr>
-            {excelData.map((row) => (
-              <td className={row.val1 !== row.val2 ? "highlight" : ""}>
-              {row.val1} </td>
+          {excelData.map((row, index) => (
+              <td key={index} className={row.val1 !== row.val2 ? "highlight-same" : "highlight-different"}>
+                {row.val1}
+              </td>
             ))}
           </tr>
         </tbody>
         <tbody>
           <tr>
-            {excelData.map((row) => (
-              <td className={row.val1 !== row.val2 ? "highlight" : ""}>
-              {row.val2}
-            </td>
+          {excelData.map((row, index) => (
+              <td key={index} className={row.val1 !== row.val2 ? "highlight-different" : "highlight-same"}>
+                {row.val2}
+              </td>
             ))}
           </tr>
         </tbody>
