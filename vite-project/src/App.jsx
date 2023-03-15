@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './App.css'
+import "./App.css";
 
 function App() {
   const [file1, setFile1] = useState(null);
@@ -34,7 +34,8 @@ function App() {
     })
       .then((response) => response.json())
       .then((data) => {
-        setExcelData(data.excelDataDifference[0].excelDifference);
+        setExcelData(data);
+        console.log("data", data);
       })
       .catch((error) => {
         console.error(error);
@@ -48,37 +49,104 @@ function App() {
         <input type="file" id="file2" onChange={handleFile2Change} />
         {filesUploaded && <button type="submit">Find Difference</button>}
       </form>
-      <table className="tables">
-        <thead>
-          <tr>
-            {excelData.map((row, index) => (
-              <th key={index}>{row.col}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-          {excelData.map((row, index) => (
-              <td key={index} className={row.val1 !== row.val2 ? "highlight-same" : "highlight-different"}>
-                {row.val1}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-        <tbody>
-          <tr>
-          {excelData.map((row, index) => (
-              <td key={index} className={row.val1 !== row.val2 ? "highlight-different" : "highlight-same"}>
-                {row.val2}
-              </td>
-            ))}
-          </tr>
-        </tbody>
-      </table>
 
+      <div className="table-container">
+        <table className="tables">
+          <thead>
+            <tr>
+              {excelData[0]?.rowDifferences?.["1"]?.map((item) => (
+                <th>{item.col}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {excelData[0]?.rowDifferences &&
+              Object.keys(excelData[0].rowDifferences).map((key) => {
+                return (
+                  <tr>
+                    {excelData[0].rowDifferences[key].map((item) => {
+                      // Split the cell values into tokens
+                      const tokens1 = item.val1.toString().split(/(\W+)/);
+                      const tokens2 = item.val2.toString().split(/(\W+)/);
+
+                      // Find the differences between the two sets of tokens
+                      const differences = [];
+                      for (let i = 0; i < Math.max(tokens1.length, tokens2.length); i++) {
+                        if (tokens1[i] !== tokens2[i]) {
+                          differences.push(i);
+                        }
+                      }
+
+                      // Render each token, highlighting the differences
+                      return (
+                        <td>
+                          {tokens1.map((token, index) => {
+                            const isDifferent = differences.includes(index);
+                            return (
+                              <span className={isDifferent ? "different" : ""}>
+                                {token}
+                              </span>
+                            );
+                          })}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+        <table className="tables">
+          <thead>
+            <tr>
+              {excelData[0]?.rowDifferences?.["1"]?.map((item) => (
+                <th>{item.col}</th>
+              ))}
+            </tr>
+          </thead>
+
+          <tbody>
+            {excelData[0]?.rowDifferences &&
+              Object.keys(excelData[0].rowDifferences).map((key) => {
+                return (
+                  <tr>
+                    {excelData[0].rowDifferences[key].map((item) => {
+                      // Split the cell values into tokens
+                      const tokens1 = item.val2.toString().split(/(\W+)/);
+                      const tokens2 = item.val1.toString().split(/(\W+)/);
+
+                      // Find the differences between the two sets of tokens
+                      const differences = [];
+                      for (let i = 0; i < Math.max(tokens1.length, tokens2.length); i++) {
+                        if (tokens1[i] !== tokens2[i]) {
+                          differences.push(i);
+                        }
+                      }
+                      // Render each token, highlighting the differences
+                      return (
+                        <td>
+                          {tokens1.map((token, index) => {
+                            const isDifferent = differences.includes(index);
+                            return (
+                              <span className={isDifferent ? "different" : ""}>
+                                {token}
+                              </span>
+                            );
+                          })}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+          </tbody>
+
+        </table>
+
+
+      </div>
 
     </div>
-
   );
 }
 

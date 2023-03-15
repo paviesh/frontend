@@ -1,32 +1,65 @@
-table {
+.tables {
   border-collapse: collapse;
-  width: 100%;
-}
-.tables{
   margin-top: 50px !important;
 }
 
 th, td {
-  text-align: left;
+  border: 1px solid black;
   padding: 8px;
-  border: 1px solid #ddd;
+  text-align: left;
 }
 
 th {
   background-color: #f2f2f2;
+  font-weight: bold;
 }
 
-tr:nth-child(even) {
+.table-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.different {
+  background-color: rgb(238, 238, 85);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+input[type="file"] {
+  padding: 10px;
   background-color: #f2f2f2;
-}
-.highlight {
-  background-color: yellow;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
 }
 
-.highlight-different {
-  background-color: rgb(244, 153, 153);
+button[type="submit"] {
+  padding: 10px;
+  margin-left: 40px;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.highlight-same {
-  background-color: rgb(156, 214, 156);
+button[type="submit"]:hover {
+  background-color: #3e8e41;
 }
