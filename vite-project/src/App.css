@@ -17,6 +17,7 @@ th {
 .table-container {
   display: flex;
   justify-content: space-between;
+  overflow-x: auto;
 }
 
 .different {
